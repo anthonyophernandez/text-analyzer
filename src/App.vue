@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="w-full h-screen">
+  <div id="app" class="w-full min-h-screen font-mono select-none">
     <router-view/>
   </div>
 </template>
@@ -9,6 +9,5 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
   }
 </style>

@@ -10,7 +10,7 @@
         <span class="text-gray-700">{{ content.length }} / {{ maxLength }}</span>
       </div>
     </div>
-    <div class="flex justify-center w-full h-full mt-8">
+    <div class="flex justify-center w-full h-full mt-6">
       <button @click="goToAnalyze" class="w-20 py-1 px-4 rounded-lg bg-gray-100 shadow-lg border-t-2 border-l-2 border-transparent text-gray-800 focus:outline-none hover:border-gray-500 hover:text-red-600">&#9658;</button>
     </div>
   </div>

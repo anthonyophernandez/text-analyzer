@@ -2,9 +2,29 @@
   <div class="relative w-full min-h-screen px-1 pt-4 pb-8 bg-gray-400">
     <h1 class="text-4xl text-center text-gray-700">Results</h1>
     <div class="flex flex-col items-center justify-center w-full h-full mt-8 select-text">
-      <div class="w-full max-w-2xl h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+      <div class="w-full max-w-3xl h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+        <span class="font-bold text-gray-700 text-xl">Details</span>
+        <hr class="border-gray-500 border-2 my-2">
+        <div class="flex justify-between w-full">
+          <span>Tokens: </span>
+          <span>{{ numOfTokens }}</span>
+        </div>
+        <div class="flex justify-between w-full">
+          <span>Unique Tokens: </span>
+          <span>{{ numOfUniqueTokens }}</span>
+        </div>
+        <div class="flex justify-between w-full">
+          <span>Characters: </span>
+          <span>{{ numOfCharacters }}</span>
+        </div>
+        <div class="flex justify-between w-full">
+          <span>Characters (no spaces): </span>
+          <span>{{ numOfCharactersWithoutSpaces }}</span>
+        </div>
+      </div>
+      <div class="w-full max-w-3xl h-auto mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
         <div class="flex justify-between">
-          <div class="flex items-center w-40">
+          <div class="flex justify-start items-center w-1/2">
             <span class="font-bold text-gray-700 text-xl">Score ({{ score }})</span>
             <span class="relative ml-2 cursor-pointer text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current icon icon-tabler icon-tabler-info-circle" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" @mouseover="showTooltip('score-tooltip')" @mouseleave="hideTooltip('score-tooltip')">
@@ -16,7 +36,7 @@
               <span ref="score-tooltip" class="hidden absolute left-0 bottom-0 w-64 -mb-16 bg-indigo-200 bg-opacity-75 p-1 text-gray-700 text-xs">Overall score calculated by adding the sentiment values of recongnized words.</span>
             </span>
           </div>
-          <div class="flex items-center w-64">
+          <div class="flex justify-end items-center w-1/2">
             <span class="font-bold text-gray-700 text-xl">Comparative ({{ comparative }})</span>
             <span class="relative ml-2 cursor-pointer text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current icon icon-tabler icon-tabler-info-circle" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" @mouseover="showTooltip('comparative-tooltip')" @mouseleave="hideTooltip('comparative-tooltip')">
@@ -60,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-1 w-full h-auto max-w-2xl mt-4">
+      <div class="grid grid-cols-2 gap-1 w-full h-auto max-w-3xl mt-4">
         <div class="w-full max-w-sm h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
           <span class="font-bold text-green-700 text-xl">Positive ({{ positiveTokens.length }})</span>
           <hr class="border-gray-500 border-2 my-2">
@@ -76,10 +96,10 @@
           </div>
         </div>
       </div>
-      <div class="w-full h-auto max-w-2xl mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+      <div class="w-full h-auto max-w-3xl mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
         <span class="font-bold text-blue-700 text-xl">Neutral ({{ neutralTokens.length }})</span>
         <hr class="border-gray-500 border-2 my-2">
-        <div class="grid grid-cols-3 gap-2 w-full h-auto max-w-2xl">
+        <div class="grid grid-cols-3 gap-2 w-full h-auto max-w-3xl">
           <div class="w-full border-b-2 border-r-2" v-for="(token, index) in neutralTokens" :key="index">{{ token }}</div>
         </div>
       </div>
@@ -107,13 +127,26 @@ export default {
       negativeTokens: [],
       neutralTokens: [],
       score: 0,
-      comparative: 0
+      comparative: 0,
+      dictOfTokens: {}
     }
   },
   computed: {
     ...mapState({
       content: state => state.content
-    })
+    }),
+    numOfTokens () {
+      return this.allTokens.length
+    },
+    numOfUniqueTokens () {
+      return Object.keys(this.dictOfTokens).length
+    },
+    numOfCharacters () {
+      return this.content.length
+    },
+    numOfCharactersWithoutSpaces () {
+      return this.content.split(' ').join('').length
+    }
   },
   methods: {
     analyze () {
@@ -125,8 +158,16 @@ export default {
         this.positiveTokens = result.positive
         this.negativeTokens = result.negative
         this.neutralTokens = this.allTokens.filter(t => this.positiveTokens.indexOf(t) === -1).filter(t => this.negativeTokens.indexOf(t) === -1)
-        console.log(result)
       }
+    },
+    loadDictOfTokens () {
+      this.allTokens.forEach(t => {
+        if (this.dictOfTokens[t]) {
+          this.dictOfTokens[t] += 1
+        } else {
+          this.dictOfTokens[t] = 1
+        }
+      })
     },
     showTooltip (elem) {
       this.$refs[elem].classList.remove('hidden')
@@ -137,8 +178,9 @@ export default {
       this.$refs[elem].classList.add('hidden')
     }
   },
-  mounted () {
+  created () {
     this.analyze()
+    this.loadDictOfTokens()
   }
 }
 </script>

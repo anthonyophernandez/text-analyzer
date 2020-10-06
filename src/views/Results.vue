@@ -22,6 +22,33 @@
           <span>{{ numOfCharactersWithoutSpaces }}</span>
         </div>
       </div>
+      <div class="w-full max-w-3xl h-auto p-3 mt-4 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-gray-700 text-xl">Token Density</span>
+          <button class="focus:outline-none" @click="moreTokenDensity = !moreTokenDensity">
+            <svg v-if="!moreTokenDensity" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-plus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-minus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+        </div>
+        <hr class="border-gray-500 border-2 my-2">
+        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreTokenDensity)? 'h-auto' : 'h-64'">
+          <div class="flex items-center justify-between w-full border-b-2 border-r-2" v-for="(value, key) in dictOfTokens" :key="key">
+            <span class="w-1/2">
+              {{ key }}
+            </span>
+            <span class="w-1/2 text-gray-500 text-sm text-right">
+              ({{ ((value / allTokens.length) * 100).toFixed(2)}}%)
+            </span>
+          </div>
+        </div>
+      </div>
       <div class="w-full max-w-3xl h-auto mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
         <div class="flex justify-between">
           <div class="flex justify-start items-center w-1/2">
@@ -69,7 +96,7 @@
               <line x1="9" y1="15" x2="15" y2="15" />
             </svg>
           </div>
-          <div v-else class="text-gray-700">
+          <div v-else class="text-red-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-32 h-32 stroke-current icon icon-tabler icon-tabler-mood-sad" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <circle cx="12" cy="12" r="9" />
@@ -97,9 +124,22 @@
         </div>
       </div>
       <div class="w-full h-auto max-w-3xl mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
-        <span class="font-bold text-blue-700 text-xl">Neutral ({{ neutralTokens.length }})</span>
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-blue-700 text-xl">Neutral ({{ neutralTokens.length }})</span>
+          <button class="focus:outline-none" @click="moreNeutralTokens = !moreNeutralTokens">
+            <svg v-if="!moreNeutralTokens" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-plus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-minus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+        </div>
         <hr class="border-gray-500 border-2 my-2">
-        <div class="grid grid-cols-3 gap-2 w-full h-auto max-w-3xl">
+        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreNeutralTokens)? 'h-auto' : 'h-64'">
           <div class="w-full border-b-2 border-r-2" v-for="(token, index) in neutralTokens" :key="index">{{ token }}</div>
         </div>
       </div>
@@ -128,7 +168,9 @@ export default {
       neutralTokens: [],
       score: 0,
       comparative: 0,
-      dictOfTokens: {}
+      dictOfTokens: {},
+      moreTokenDensity: false,
+      moreNeutralTokens: false
     }
   },
   computed: {
@@ -186,7 +228,7 @@ export default {
 </script>
 
 <style>
-  div::selection {
+  div::selection, span::selection {
     background: #faf089;
   }
 </style>

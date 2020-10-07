@@ -25,7 +25,7 @@
       <div class="w-full max-w-3xl h-auto p-3 mt-4 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
         <div class="flex justify-between items-center">
           <span class="font-bold text-gray-700 text-xl">Token Density</span>
-          <button class="focus:outline-none" @click="moreTokenDensity = !moreTokenDensity">
+          <button v-if="this.content.length > 0" class="focus:outline-none" @click="moreTokenDensity = !moreTokenDensity">
             <svg v-if="!moreTokenDensity" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-plus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <line x1="12" y1="5" x2="12" y2="19" />
@@ -38,7 +38,7 @@
           </button>
         </div>
         <hr class="border-gray-500 border-2 my-2">
-        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreTokenDensity)? 'h-auto' : 'h-64'">
+        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreTokenDensity || this.content.length === 0)? 'h-auto' : 'h-64'">
           <div class="flex items-center justify-between w-full border-b-2 border-r-2" v-for="(value, key) in dictOfTokens" :key="key">
             <span class="w-1/2">
               {{ key }}
@@ -126,7 +126,7 @@
       <div class="w-full h-auto max-w-3xl mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
         <div class="flex justify-between items-center">
           <span class="font-bold text-blue-700 text-xl">Neutral ({{ neutralTokens.length }})</span>
-          <button class="focus:outline-none" @click="moreNeutralTokens = !moreNeutralTokens">
+          <button v-if="this.content.length > 0" class="focus:outline-none" @click="moreNeutralTokens = !moreNeutralTokens">
             <svg v-if="!moreNeutralTokens" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-plus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <line x1="12" y1="5" x2="12" y2="19" />
@@ -139,13 +139,13 @@
           </button>
         </div>
         <hr class="border-gray-500 border-2 my-2">
-        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreNeutralTokens)? 'h-auto' : 'h-64'">
+        <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreNeutralTokens || this.content.length === 0)? 'h-auto' : 'h-64'">
           <div class="w-full border-b-2 border-r-2" v-for="(token, index) in neutralTokens" :key="index">{{ token }}</div>
         </div>
       </div>
     </div>
     <!-- Return Button-->
-    <button @click="$router.push({ path: '/' })" class="absolute bottom-0 right-0 w-12 h-12 mr-4 mb-4 rounded-full  bg-gray-100 shadow-lg border-t-2 border-l-2 border-transparent text-gray-800 focus:outline-none hover:border-gray-500 hover:text-blue-600">
+    <button @click="$router.push({ path: '/' })" class="fixed bottom-0 right-0 w-12 h-12 mr-4 mb-4 rounded-full  bg-gray-100 shadow-lg border-2 text-gray-800 border-gray-800 focus:outline-none hover:border-blue-600 hover:text-blue-600">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 stroke-current icon icon-tabler icon-tabler-arrow-back-up" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" />

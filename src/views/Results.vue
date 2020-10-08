@@ -39,7 +39,7 @@
         </div>
         <hr class="border-gray-500 border-2 my-2">
         <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreTokenDensity || this.content.length === 0)? 'h-auto' : 'h-64'">
-          <div class="flex items-center justify-between w-full border-b-2 border-r-2" v-for="(value, key) in dictOfTokens" :key="key">
+          <div class="flex items-center justify-between w-full border-b-2 border-r-2 break-all" v-for="(value, key) in dictOfTokens" :key="key">
             <span class="w-1/2">
               {{ key }}
             </span>
@@ -175,7 +175,8 @@ export default {
   },
   computed: {
     ...mapState({
-      content: state => state.content
+      content: state => state.content,
+      isDarkMode: state => state.darkMode
     }),
     numOfTokens () {
       return this.allTokens.length

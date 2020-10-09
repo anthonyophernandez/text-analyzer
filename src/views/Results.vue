@@ -1,9 +1,11 @@
 <template>
-  <div class="relative w-full min-h-screen px-1 pt-4 pb-8 bg-gray-400">
-    <h1 class="text-4xl text-center text-gray-700">Results</h1>
+  <div class="relative w-full min-h-screen px-1 pt-4 pb-8" :class="(isDarkMode) ? 'bg-gray-900' : 'bg-gray-400'">
+    <h1 class="text-4xl text-center" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Results</h1>
     <div class="flex flex-col items-center justify-center w-full h-full mt-8 select-text">
-      <div class="w-full max-w-3xl h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
-        <span class="font-bold text-gray-700 text-xl">Details</span>
+      <div
+        class="w-full max-w-3xl h-auto p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+        :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
+        <span class="font-bol text-xl" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Details</span>
         <hr class="border-gray-500 border-2 my-2">
         <div class="flex justify-between w-full">
           <span>Tokens: </span>
@@ -22,9 +24,11 @@
           <span>{{ numOfCharactersWithoutSpaces }}</span>
         </div>
       </div>
-      <div class="w-full max-w-3xl h-auto p-3 mt-4 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+      <div
+      class="w-full max-w-3xl h-auto p-3 mt-4 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+      :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
         <div class="flex justify-between items-center">
-          <span class="font-bold text-gray-700 text-xl">Token Density</span>
+          <span class="font-bold text-xl" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Token Density</span>
           <button v-if="this.content.length > 0" class="focus:outline-none" @click="moreTokenDensity = !moreTokenDensity">
             <svg v-if="!moreTokenDensity" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-current icon icon-tabler icon-tabler-plus" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -39,7 +43,7 @@
         </div>
         <hr class="border-gray-500 border-2 my-2">
         <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreTokenDensity || this.content.length === 0)? 'h-auto' : 'h-64'">
-          <div class="flex items-center justify-between w-full border-b-2 border-r-2 break-all" v-for="(value, key) in dictOfTokens" :key="key">
+          <div class="flex items-center justify-between w-full border-b-2 border-r-2 break-all" :class="(isDarkMode) ? 'border-gray-600' : 'border-gray-400'" v-for="(value, key) in dictOfTokens" :key="key">
             <span class="w-1/2">
               {{ key }}
             </span>
@@ -49,10 +53,12 @@
           </div>
         </div>
       </div>
-      <div class="w-full max-w-3xl h-auto mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+      <div
+      class="w-full max-w-3xl h-auto mt-4 p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+      :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
         <div class="flex justify-between">
           <div class="flex justify-start items-center w-1/2">
-            <span class="font-bold text-gray-700 text-xl">Score ({{ score }})</span>
+            <span class="font-bold text-xl" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Score ({{ score }})</span>
             <span class="relative ml-2 cursor-pointer text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current icon icon-tabler icon-tabler-info-circle" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" @mouseover="showTooltip('score-tooltip')" @mouseleave="hideTooltip('score-tooltip')">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -64,7 +70,7 @@
             </span>
           </div>
           <div class="flex justify-end items-center w-1/2">
-            <span class="font-bold text-gray-700 text-xl">Comparative ({{ comparative }})</span>
+            <span class="font-bold text-xl" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Comparative ({{ comparative }})</span>
             <span class="relative ml-2 cursor-pointer text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current icon icon-tabler icon-tabler-info-circle" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" @mouseover="showTooltip('comparative-tooltip')" @mouseleave="hideTooltip('comparative-tooltip')">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -108,22 +114,28 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-1 w-full h-auto max-w-3xl mt-4">
-        <div class="w-full max-w-sm h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+        <div
+        class="w-full max-w-sm h-auto p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+        :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
           <span class="font-bold text-green-700 text-xl">Positive ({{ positiveTokens.length }})</span>
           <hr class="border-gray-500 border-2 my-2">
           <div class="grid grid-cols-1 gap-2">
-            <div class="border-b-2 border-r-2" v-for="(token, index) in positiveTokens" :key="index">{{ token }}</div>
+            <div class="border-b-2 border-r-2" :class="(isDarkMode) ? 'border-gray-600' : 'border-gray-400'" v-for="(token, index) in positiveTokens" :key="index">{{ token }}</div>
           </div>
         </div>
-        <div class="w-full max-w-sm h-auto p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
-          <span class="font-bold text-gray-700 text-xl">Negative ({{ negativeTokens.length }})</span>
+        <div
+        class="w-full max-w-sm h-auto p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+        :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
+          <span class="font-bold text-red-700 text-xl">Negative ({{ negativeTokens.length }})</span>
           <hr class="border-gray-500 border-2 my-2">
           <div class="grid grid-cols-1 gap-2">
-            <div class="border-b-2 border-r-2" v-for="(token, index) in negativeTokens" :key="index">{{ token }}</div>
+            <div class="border-b-2 border-r-2" :class="(isDarkMode) ? 'border-gray-600' : 'border-gray-400'" v-for="(token, index) in negativeTokens" :key="index">{{ token }}</div>
           </div>
         </div>
       </div>
-      <div class="w-full h-auto max-w-3xl mt-4 p-3 rounded-lg bg-gradient-to-br from-gray-200 to-gray-100 border-t-2 border-l-2 border-gray-200 shadow-2xl text-gray-600 text-lg">
+      <div
+      class="w-full h-auto max-w-3xl mt-4 p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+      :class="(isDarkMode) ? 'bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'">
         <div class="flex justify-between items-center">
           <span class="font-bold text-blue-700 text-xl">Neutral ({{ neutralTokens.length }})</span>
           <button v-if="this.content.length > 0" class="focus:outline-none" @click="moreNeutralTokens = !moreNeutralTokens">
@@ -140,12 +152,12 @@
         </div>
         <hr class="border-gray-500 border-2 my-2">
         <div class="grid grid-cols-3 gap-2 w-full overflow-hidden max-w-3xl" :class="(moreNeutralTokens || this.content.length === 0)? 'h-auto' : 'h-64'">
-          <div class="w-full border-b-2 border-r-2" v-for="(token, index) in neutralTokens" :key="index">{{ token }}</div>
+          <div class="w-full border-b-2 border-r-2" :class="(isDarkMode) ? 'border-gray-600' : 'border-gray-400'" v-for="(token, index) in neutralTokens" :key="index">{{ token }}</div>
         </div>
       </div>
     </div>
     <!-- Return Button-->
-    <button @click="$router.push({ path: '/' })" class="fixed bottom-0 right-0 w-12 h-12 mr-4 mb-4 rounded-full  bg-gray-100 shadow-lg border-2 text-gray-800 border-gray-800 focus:outline-none hover:border-blue-600 hover:text-blue-600">
+    <button @click="$router.push({ path: '/' })" class="fixed bottom-0 right-0 w-12 h-12 mr-4 mb-4 rounded-full bg-gray-100 shadow-lg border-2 text-gray-800 border-gray-800 focus:outline-none hover:border-blue-600 hover:text-blue-600">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 stroke-current icon icon-tabler icon-tabler-arrow-back-up" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M9 13l-4 -4l4 -4m-4 4h11a4 4 0 0 1 0 8h-1" />
@@ -227,9 +239,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  div::selection, span::selection {
-    background: #faf089;
-  }
-</style>

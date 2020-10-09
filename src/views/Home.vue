@@ -3,7 +3,7 @@
     <h1 class="text-4xl text-center" :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">Text Analyzer</h1>
     <div class="flex justify-center w-full h-full mt-8">
       <textarea
-        class="resize-none w-full max-w-2xl p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg"
+        class="resize-none w-full max-w-2xl p-3 rounded-lg border-t-2 border-l-2 shadow-2xl text-lg select-text"
         :class="(isDarkMode) ? 'selection-dark-mode bg-gradient-to-br from-gray-800 to-gray-700 border-gray-800 text-gray-200' : 'selection-light-mode bg-gradient-to-br from-gray-200 to-gray-100 border-gray-200 text-gray-600'"
         cols="30"
         rows="15"
@@ -14,7 +14,7 @@
     <div class="flex justify-center w-full h-full mt-4">
       <div class="flex justify-between w-full max-w-2xl">
         <span class="text-red-600">{{ error }}</span>
-        <span :class="(isDarkMode) ? 'text-gray-400' : 'text-gray-700'">{{ content.length }} / {{ maxLength }}</span>
+        <span :class="(isDarkMode) ? 'selection-dark-mode text-gray-400' : 'selection-light-mode text-gray-700'">{{ content.length }} / {{ maxLength }}</span>
       </div>
     </div>
     <div class="flex justify-center w-full h-full mt-6">
@@ -64,12 +64,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .selection-dark-mode::selection {
-    background: #3182ce;
-  }
-  .selection-light-mode::selection {
-    background: #faf089;
-  }
-</style>

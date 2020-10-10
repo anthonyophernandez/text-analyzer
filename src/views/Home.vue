@@ -13,7 +13,7 @@
     </div>
     <div class="flex justify-center w-full h-full mt-4">
       <div class="flex justify-between w-full max-w-2xl">
-        <span class="text-red-600">{{ error }}</span>
+        <span class="text-blue-600">{{ message }}</span>
         <span :class="(isDarkMode) ? 'selection-dark-mode text-gray-400' : 'selection-light-mode text-gray-700'">{{ content.length }} / {{ maxLength }}</span>
       </div>
     </div>
@@ -43,7 +43,7 @@ export default {
     return {
       content: '',
       maxLength: 2500,
-      error: null
+      message: null
     }
   },
   computed: {
@@ -52,13 +52,17 @@ export default {
     })
   },
   methods: {
-    goToAnalyze () {
+    async goToAnalyze () {
       if (this.content.length > 0) {
         this.$store.dispatch('setContent', this.content)
-        this.$router.push({ path: '/results' })
+        this.message = 'Analyzing...'
+        await setTimeout(() => {
+          this.message = ''
+          this.$router.push({ path: '/results' })
+        }, 6000)
       } else {
-        this.error = 'There are 0 words. Write something...'
-        setTimeout(() => { this.error = '' }, 2500)
+        this.message = 'There are 0 words. Write something...'
+        setTimeout(() => { this.message = '' }, 2500)
       }
     }
   }

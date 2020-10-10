@@ -57,8 +57,8 @@ export default {
         this.$store.dispatch('setContent', this.content)
         this.message = 'Analyzing...'
         await setTimeout(() => {
-          this.message = ''
           this.$router.push({ path: '/results' })
+          this.message = ''
         }, 6000)
       } else {
         this.message = 'There are 0 words. Write something...'

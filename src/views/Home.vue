@@ -57,14 +57,14 @@ export default {
         this.$store.dispatch('setContent', this.content)
         this.message = 'Analyzing...'
         this.$router.push({ path: '/results' })
-        await setTimeout(() => {
-          this.message = ''
-        }, 6000)
       } else {
         this.message = 'There are 0 words. Write something...'
         setTimeout(() => { this.message = '' }, 2500)
       }
     }
+  },
+  mounted () {
+    this.message = ''
   }
 }
 </script>

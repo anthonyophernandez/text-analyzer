@@ -56,8 +56,8 @@ export default {
       if (this.content.length > 0) {
         this.$store.dispatch('setContent', this.content)
         this.message = 'Analyzing...'
+        this.$router.push({ path: '/results' })
         await setTimeout(() => {
-          this.$router.push({ path: '/results' })
           this.message = ''
         }, 6000)
       } else {
